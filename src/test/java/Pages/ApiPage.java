@@ -5,6 +5,7 @@ import Helper.Utility;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
 
 
@@ -45,17 +46,17 @@ public class ApiPage {
 
     }
     public void validationResponseBodyGetListUser(){
-        List<Object> id = res.jsonPath().getList("id");
-        List<Object> email = res.jsonPath().getList("email");
-        List<Object> first_name = res.jsonPath().getList("first_name");
-        List<Object> last_name = res.jsonPath().getList("last_name");
-        List<Object> avatar = res.jsonPath().getList("avatar");
+        String firstId = res.jsonPath().getString("data[0].id");
+        String firstName = res.jsonPath().getString("data[0].first_name");
+        String firstEmail = res.jsonPath().getString("data[0].email");
+        String firstLastName = res.jsonPath().getString("data[0].last_name");
+        String firstAvatar= res.jsonPath().getString("data[0].avatar");
 
-        assertThat(id.get(0)).isNotNull();
-        assertThat(email.get(0)).isNotNull();
-        assertThat(first_name.get(0)).isNotNull();
-        assertThat(last_name.get(0)).isNotNull();
-        assertThat(avatar.get(0)).isNotNull();
+        Assertions.assertThat(firstId).isNotNull();
+        Assertions.assertThat(firstName).isNotNull();
+        Assertions.assertThat(firstEmail).isNotNull();
+        Assertions.assertThat(firstLastName).isNotNull();
+        Assertions.assertThat(firstAvatar).isNotNull();
     }
     public void validationResponseJsonWhitJSONSchema(String fileJSON){
         File JSONFile = Utility.getJSONSchemaFile(fileJSON);
